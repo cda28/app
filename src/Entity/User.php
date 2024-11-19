@@ -4,12 +4,15 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Trait\CreatedUpdatedTrait;
+use App\Entity\Trait\StatusTrait;
+use App\Enum\Presence;
 use App\Repository\UserRepository;
 use Doctrine\Common\Collections\ArrayCollection;
 use Doctrine\Common\Collections\Collection;
 use Doctrine\ORM\Mapping as ORM;
 
 #[ORM\Entity(repositoryClass: UserRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ORM\Table(name: '`user`')]
 #[ApiResource]
 class User
@@ -40,11 +43,16 @@ class User
     #[ORM\Column]
     private array $roles = [];
 
+    #[ORM\Column(nullable: true, enumType: Presence::class)]
+    private ?Presence $presence = null;
+
     use CreatedUpdatedTrait;
+    use StatusTrait;
 
     public function __construct()
     {
         $this->user_infos = new ArrayCollection();
+        $this->roles[] = 'ROLE_USER';
     }
 
     public function getId(): ?int
@@ -137,7 +145,22 @@ class User
 
     public function setRoles(array $roles): static
     {
-        $this->roles = $roles;
+        // definir les rôles attribués aux utilisateur
+        if (in_array($roles, ['ROLE_STUDENT', 'ROLE_TEACHER', 'ROLE_ADMIN', 'ROLE_USER'])) {
+            $this->roles = $roles;
+        }
+
+        return $this;
+    }
+
+    public function getPresence(): ?Presence
+    {
+        return $this->presence;
+    }
+
+    public function setPresence(?Presence $presence): static
+    {
+        $this->presence = $presence;
 
         return $this;
     }

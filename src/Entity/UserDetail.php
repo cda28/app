@@ -4,6 +4,7 @@ namespace App\Entity;
 
 use ApiPlatform\Metadata\ApiResource;
 use App\Entity\Trait\CreatedUpdatedTrait;
+use App\Entity\Trait\StatusTrait;
 use App\Repository\UserDetailRepository;
 use Doctrine\DBAL\Types\Types;
 use Doctrine\ORM\Mapping as ORM;
@@ -33,6 +34,7 @@ class UserDetail
     private ?string $personal_website = null;
 
     use CreatedUpdatedTrait;
+    use StatusTrait;
 
     public function getId(): ?int
     {

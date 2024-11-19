@@ -32,5 +32,15 @@ trait CreatedUpdatedTrait{
         $this->createdAt = $createdAt;
     }
 
-    // quand on persiste ou update des méthodes s'appeleront automatiquement
+    #[ORM\PrePersist]
+    public function setCreationDate(): void
+    {
+       $this->createdAt = new \DateTime();
+    }
+ 
+    #[ORM\PreUpdate]
+    public function updateTimestamp(): void
+    {
+       $this->updatedAt = new \DateTime();
+    }
 }
