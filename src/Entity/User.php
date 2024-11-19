@@ -46,6 +46,27 @@ class User
     #[ORM\Column(nullable: true, enumType: Presence::class)]
     private ?Presence $presence = null;
 
+    /**
+     * @var Collection<int, Degree>
+     */
+    #[ORM\ManyToMany(targetEntity: Degree::class, inversedBy: 'users')]
+    private Collection $dregrees;
+
+    /**
+     * @var Collection<int, Rating>
+     */
+    #[ORM\OneToMany(targetEntity: Rating::class, mappedBy: 'user_rating')]
+    private Collection $user_ratings;
+
+    #[ORM\OneToOne(cascade: ['persist', 'remove'])]
+    private ?Address $address = null;
+
+    /**
+     * @var Collection<int, Education>
+     */
+    #[ORM\ManyToMany(targetEntity: Education::class, inversedBy: 'users')]
+    private Collection $educations;
+
     use CreatedUpdatedTrait;
     use StatusTrait;
 
@@ -53,6 +74,9 @@ class User
     {
         $this->user_infos = new ArrayCollection();
         $this->roles[] = 'ROLE_USER';
+        $this->dregrees = new ArrayCollection();
+        $this->user_ratings = new ArrayCollection();
+        $this->educations = new ArrayCollection();
     }
 
     public function getId(): ?int
@@ -145,8 +169,8 @@ class User
 
     public function setRoles(array $roles): static
     {
-        // definir les rôles attribués aux utilisateur
-        if (in_array($roles, ['ROLE_STUDENT', 'ROLE_TEACHER', 'ROLE_ADMIN', 'ROLE_USER'])) {
+        // definir les rôles attribués aux utilisateurs
+        if(empty(array_diff($roles, ['ROLE_STUDENT', 'ROLE_TEACHER', 'ROLE_ADMIN', 'ROLE_USER']))){
             $this->roles = $roles;
         }
 
@@ -161,6 +185,96 @@ class User
     public function setPresence(?Presence $presence): static
     {
         $this->presence = $presence;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Degree>
+     */
+    public function getDregrees(): Collection
+    {
+        return $this->dregrees;
+    }
+
+    public function addDregree(Degree $dregree): static
+    {
+        if (!$this->dregrees->contains($dregree)) {
+            $this->dregrees->add($dregree);
+        }
+
+        return $this;
+    }
+
+    public function removeDregree(Degree $dregree): static
+    {
+        $this->dregrees->removeElement($dregree);
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Rating>
+     */
+    public function getUserRatings(): Collection
+    {
+        return $this->user_ratings;
+    }
+
+    public function addUserRating(Rating $userRating): static
+    {
+        if (!$this->user_ratings->contains($userRating)) {
+            $this->user_ratings->add($userRating);
+            $userRating->setUserRating($this);
+        }
+
+        return $this;
+    }
+
+    public function removeUserRating(Rating $userRating): static
+    {
+        if ($this->user_ratings->removeElement($userRating)) {
+            // set the owning side to null (unless already changed)
+            if ($userRating->getUserRating() === $this) {
+                $userRating->setUserRating(null);
+            }
+        }
+
+        return $this;
+    }
+
+    public function getAddress(): ?Address
+    {
+        return $this->address;
+    }
+
+    public function setAddress(?Address $address): static
+    {
+        $this->address = $address;
+
+        return $this;
+    }
+
+    /**
+     * @return Collection<int, Education>
+     */
+    public function getEducations(): Collection
+    {
+        return $this->educations;
+    }
+
+    public function addEducation(Education $education): static
+    {
+        if (!$this->educations->contains($education)) {
+            $this->educations->add($education);
+        }
+
+        return $this;
+    }
+
+    public function removeEducation(Education $education): static
+    {
+        $this->educations->removeElement($education);
 
         return $this;
     }
