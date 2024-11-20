@@ -2,14 +2,13 @@
 
 namespace App\Factory;
 
-use App\Entity\UserDetail;
-use App\Enum\Status;
+use App\Entity\Education;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<UserDetail>
+ * @extends PersistentProxyObjectFactory<Education>
  */
-final class UserDetailFactory extends PersistentProxyObjectFactory
+final class EducationFactory extends PersistentProxyObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
@@ -22,7 +21,7 @@ final class UserDetailFactory extends PersistentProxyObjectFactory
 
     public static function class(): string
     {
-        return UserDetail::class;
+        return Education::class;
     }
 
     /**
@@ -32,12 +31,9 @@ final class UserDetailFactory extends PersistentProxyObjectFactory
      */
     protected function defaults(): array|callable
     {
+
         return [
-            'cv' => self::faker()->text(100),
-            'bio' => self::faker()->text(100),
-            'github_link' => self::faker()->url(),
-            'personal_website' => self::faker()->url(),
-            'status' => Status::PUBLISHED
+            'name' => self::faker()->shuffleArray(['EM', '3WA', 'ESTIAM', 'Arcplex', 'ESEMI'])[0],
         ];
     }
 
@@ -47,7 +43,7 @@ final class UserDetailFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(UserDetail $userDetail): void {})
+            // ->afterInstantiate(function(Education $education): void {})
         ;
     }
 }

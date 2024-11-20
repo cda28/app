@@ -36,7 +36,7 @@ class Education
     /**
      * @var Collection<int, Course>
      */
-    #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'education')]
+    #[ORM\ManyToMany(targetEntity: Course::class, inversedBy: 'educations', cascade:['persist', 'remove'])]
     private Collection $courses;
 
     #[ORM\OneToOne(cascade: ['persist', 'remove'])]

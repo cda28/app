@@ -10,7 +10,7 @@ use Doctrine\Migrations\AbstractMigration;
 /**
  * Auto-generated Migration: Please modify to your needs!
  */
-final class Version20241119141141 extends AbstractMigration
+final class Version20241120101204 extends AbstractMigration
 {
     public function getDescription(): string
     {
@@ -25,7 +25,7 @@ final class Version20241119141141 extends AbstractMigration
         $this->addSql('CREATE TABLE course_module (course_id INT NOT NULL, module_id INT NOT NULL, PRIMARY KEY(course_id, module_id))');
         $this->addSql('CREATE INDEX IDX_A21CE765591CC992 ON course_module (course_id)');
         $this->addSql('CREATE INDEX IDX_A21CE765AFC2B591 ON course_module (module_id)');
-        $this->addSql('CREATE TABLE degree (id SERIAL NOT NULL, name VARCHAR(255) NOT NULL, level VARCHAR(255) DEFAULT NULL, speciality VARCHAR(255) DEFAULT NULL, obtained_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, status VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
+        $this->addSql('CREATE TABLE degree (id SERIAL NOT NULL, name VARCHAR(255) NOT NULL, diploma VARCHAR(255) DEFAULT NULL, speciality VARCHAR(255) DEFAULT NULL, obtained_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, status VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('COMMENT ON COLUMN degree.obtained_at IS \'(DC2Type:datetime_immutable)\'');
         $this->addSql('CREATE TABLE education (id SERIAL NOT NULL, address_id INT DEFAULT NULL, name VARCHAR(255) NOT NULL, start_date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, end_date TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, status VARCHAR(255) DEFAULT NULL, created_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, updated_at TIMESTAMP(0) WITHOUT TIME ZONE DEFAULT NULL, PRIMARY KEY(id))');
         $this->addSql('CREATE UNIQUE INDEX UNIQ_DB0A5ED2F5B7AF75 ON education (address_id)');

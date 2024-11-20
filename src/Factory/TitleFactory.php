@@ -2,14 +2,13 @@
 
 namespace App\Factory;
 
-use App\Entity\UserDetail;
-use App\Enum\Status;
+use App\Entity\Title;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
- * @extends PersistentProxyObjectFactory<UserDetail>
+ * @extends PersistentProxyObjectFactory<Title>
  */
-final class UserDetailFactory extends PersistentProxyObjectFactory
+final class TitleFactory extends PersistentProxyObjectFactory
 {
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
@@ -22,7 +21,7 @@ final class UserDetailFactory extends PersistentProxyObjectFactory
 
     public static function class(): string
     {
-        return UserDetail::class;
+        return Title::class;
     }
 
     /**
@@ -33,11 +32,7 @@ final class UserDetailFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'cv' => self::faker()->text(100),
-            'bio' => self::faker()->text(100),
-            'github_link' => self::faker()->url(),
-            'personal_website' => self::faker()->url(),
-            'status' => Status::PUBLISHED
+            'name' => self::faker()->shuffleArray(["FSD", "CDA", "ESI", "DATA", "AIA"])[0],
         ];
     }
 
@@ -47,7 +42,7 @@ final class UserDetailFactory extends PersistentProxyObjectFactory
     protected function initialize(): static
     {
         return $this
-            // ->afterInstantiate(function(UserDetail $userDetail): void {})
+            // ->afterInstantiate(function(Title $title): void {})
         ;
     }
 }

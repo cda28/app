@@ -35,8 +35,8 @@ class Course
     /**
      * @var Collection<int, Education>
      */
-    #[ORM\ManyToMany(targetEntity: Education::class, mappedBy: 'courses')]
-    private Collection $education;
+    #[ORM\ManyToMany(targetEntity: Education::class, mappedBy: 'courses', cascade:['persist', 'remove'])]
+    private Collection $educations;
 
     /**
      * @var Collection<int, Module>
@@ -49,7 +49,7 @@ class Course
 
     public function __construct()
     {
-        $this->education = new ArrayCollection();
+        $this->educations = new ArrayCollection();
         $this->modules = new ArrayCollection();
         $this->skills = new ArrayCollection();
     }
@@ -98,15 +98,15 @@ class Course
     /**
      * @return Collection<int, Education>
      */
-    public function getEducation(): Collection
+    public function getEducations(): Collection
     {
-        return $this->education;
+        return $this->educations;
     }
 
     public function addEducation(Education $education): static
     {
-        if (!$this->education->contains($education)) {
-            $this->education->add($education);
+        if (!$this->educations->contains($education)) {
+            $this->educations->add($education);
             $education->addCourse($this);
         }
 
@@ -115,7 +115,7 @@ class Course
 
     public function removeEducation(Education $education): static
     {
-        if ($this->education->removeElement($education)) {
+        if ($this->educations->removeElement($education)) {
             $education->removeCourse($this);
         }
 
