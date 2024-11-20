@@ -10,6 +10,7 @@ use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
  */
 final class ModuleFactory extends PersistentProxyObjectFactory
 {
+
     /**
      * @see https://symfony.com/bundles/ZenstruckFoundryBundle/current/index.html#factories-as-services
      *
@@ -32,7 +33,7 @@ final class ModuleFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-            'title' => self::faker()->text(255),
+            'title' => self::faker()->text(255)
         ];
     }
 

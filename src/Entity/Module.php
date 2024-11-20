@@ -46,7 +46,7 @@ class Module
     /**
      * @var Collection<int, Course>
      */
-    #[ORM\ManyToMany(targetEntity: Course::class, mappedBy: 'modules')]
+    #[ORM\ManyToMany(targetEntity: Course::class, mappedBy: 'modules', cascade:['persist'])]
     private Collection $courses;
 
     #[ORM\Column(nullable: true)]

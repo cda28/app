@@ -41,7 +41,7 @@ class Course
     /**
      * @var Collection<int, Module>
      */
-    #[ORM\ManyToMany(targetEntity: Module::class, inversedBy: 'courses')]
+    #[ORM\ManyToMany(targetEntity: Module::class, inversedBy: 'courses', cascade:['persist', 'remove'])]
     private Collection $modules;
 
     use CreatedUpdatedTrait;

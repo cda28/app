@@ -28,7 +28,7 @@ class Title
     /**
      * @var Collection<int, Education>
      */
-    #[ORM\ManyToMany(targetEntity: Education::class, inversedBy: 'titles')]
+    #[ORM\ManyToMany(targetEntity: Education::class, inversedBy: 'titles', cascade:['persist'])]
     private Collection $educations;
 
     use StatusTrait;

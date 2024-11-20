@@ -34,7 +34,7 @@ final class CourseFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
         return [
-           'title' => self::faker()->title()
+           'title' => self::faker()->title(),
         ];
     }
 
