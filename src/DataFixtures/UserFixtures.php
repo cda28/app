@@ -16,7 +16,7 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
     {
         $modules = ModuleFactory::all();
 
-        $users = UserFactory::createMany(2, function ()  {
+        $users = UserFactory::createMany(60, function ()  {
 
             return [
                 'roles' => ['ROLE_STUDENT']
