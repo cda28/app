@@ -40,4 +40,17 @@ class UserRepository extends ServiceEntityRepository
     //            ->getOneOrNullResult()
     //        ;
     //    }
+
+    public function findRatingByRoleStudent(): array{
+        $entityManager =  $this->getEntityManager();
+
+        $query =  $entityManager->createQuery(
+            'SELECT u.id, r.score
+             FROM App\Entity\User u 
+             JOIN u.user_ratings r 
+            '
+        );
+
+        return $query->getArrayResult() ;
+    }
 }

@@ -10,36 +10,36 @@ use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
 
-class UserFixtures extends Fixture implements DependentFixtureInterface
+class TeacherFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
+      
         $modules = ModuleFactory::all();
 
-        $users = UserFactory::createMany(60, function ()  {
+        $teachers = UserFactory::createMany(10, function () {
 
             return [
-                'roles' => ['ROLE_STUDENT']
+                'roles' => ['ROLE_TEACHER']
             ];
         });
 
-        foreach($users as $user){
+        foreach($teachers as $teacher){
             shuffle($modules);
 
             UserModulePlanningFactory::createOne([
-                'user_module' => $user,
+                'user_module' => $teacher,
                 'module' => $modules[0]
             ]);
 
             RatingFactory::createOne([
-                'user_rating' => $user,
+                'user_rating' => $teacher,
                 'score' => rand(1, 10),
                 'module' => $modules[0]
             ]);
         }
-
-        
     }
+
 
     public function getDependencies(): array
     {

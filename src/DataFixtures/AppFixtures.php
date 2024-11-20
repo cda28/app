@@ -20,11 +20,5 @@ class AppFixtures extends Fixture
             ];
         });
 
-        UserFactory::createMany(10, function () {
-
-            return [
-                'roles' => ['ROLE_TEACHER']
-            ];
-        });
     }
 }
