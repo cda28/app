@@ -12,6 +12,7 @@ use Doctrine\ORM\Mapping as ORM;
 use App\Enum\Diploma;
 
 #[ORM\Entity(repositoryClass: DegreeRepository::class)]
+#[ORM\HasLifecycleCallbacks]
 #[ApiResource]
 class Degree
 {

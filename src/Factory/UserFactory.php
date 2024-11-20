@@ -36,7 +36,7 @@ final class UserFactory extends PersistentProxyObjectFactory
             'first_name' => self::faker()->firstName(),
             'last_name' => self::faker()->lastName(),
             'email' => self::faker()->unique()->email(),
-            'roles' => [self::faker()->shuffleArray(['ROLE_USER', 'ROLE_TEACHER'])[0]],
+            'roles' => [self::faker()->shuffleArray(['ROLE_STUDENT', 'ROLE_TEACHER'])[0]],
             'presence' => self::faker()->shuffleArray([Presence::BUSY, Presence::IN_PERSON, Presence::OFFLINE])[0],
             'dregrees' => DegreeFactory::createMany(rand(1, 3)) // degrees c'est le nom de la relation dans Doctrine
         ];

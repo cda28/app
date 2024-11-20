@@ -4,6 +4,7 @@ namespace App\Factory;
 
 use App\Entity\Degree;
 use App\Enum\Diploma;
+use App\Enum\Status;
 use Zenstruck\Foundry\Persistence\PersistentProxyObjectFactory;
 
 /**
@@ -73,12 +74,16 @@ final class DegreeFactory extends PersistentProxyObjectFactory
     protected function defaults(): array|callable
     {
 
-        $degrees = self::faker()->shuffleArray($this->degrees);
-        $keys = array_keys($degrees);
+
+        $randomDiploma = Diploma::cases()[array_rand(Diploma::cases())];
+        $name = $randomDiploma->name ;
+        $speciality = $this->degrees[$name]['speciality'];
         return [
-            'name' => $degrees[$keys[0]]['name'],
-            'speciality' => $degrees[$keys[0]]['speciality'],
-            'diploma' => Diploma::BACHELOR
+            'name' =>$name,
+            'speciality' => $speciality,
+            'diploma' =>$randomDiploma,
+            'obtained_at ' => self::faker()->dateTimeBetween('1995-01-01', '2000-12-31'),
+            'status' => Status::COMPLETED
         ];
     }
 
