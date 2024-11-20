@@ -3,6 +3,9 @@
 namespace App\DataFixtures;
 
 use App\Factory\ModuleFactory;
+use App\Factory\RatingFactory;
+use App\Factory\UserFactory;
+use App\Factory\UserModulePlanningFactory;
 use Doctrine\Bundle\FixturesBundle\Fixture;
 use Doctrine\Persistence\ObjectManager;
 use Doctrine\Common\DataFixtures\DependentFixtureInterface;
@@ -11,7 +14,29 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
 {
     public function load(ObjectManager $manager): void
     {
-       $modules = ModuleFactory::all();
+        $modules = ModuleFactory::all();
+
+        $users = UserFactory::createMany(2, function ()  {
+
+            return [
+                'roles' => ['ROLE_STUDENT']
+            ];
+        });
+
+        foreach($users as $user){
+            shuffle($modules);
+
+            UserModulePlanningFactory::createOne([
+                'user_module' => $user,
+                'module' => $modules[0]
+            ]);
+
+            RatingFactory::createOne([
+                'user_rating' => $user,
+                'score' => rand(1, 10),
+                'module' => $modules[0]
+            ]);
+        }
     }
 
     public function getDependencies(): array
@@ -20,5 +45,4 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
             EducationFixtures::class,
         ];
     }
-
 }
