@@ -2,6 +2,7 @@
 
 namespace App\DataFixtures;
 
+use App\Enum\Presence;
 use App\Factory\ModuleFactory;
 use App\Factory\RatingFactory;
 use App\Factory\UserFactory;
@@ -19,7 +20,8 @@ class UserFixtures extends Fixture implements DependentFixtureInterface
         $users = UserFactory::createMany(60, function ()  {
 
             return [
-                'roles' => ['ROLE_STUDENT']
+                'roles' => ['ROLE_STUDENT'],
+                'presence' => rand(1, 3 ) == 1 ? Presence::IN_PERSON :  Presence::ONLINE
             ];
         });
 

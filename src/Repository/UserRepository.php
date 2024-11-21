@@ -39,4 +39,29 @@ class UserRepository extends ServiceEntityRepository
         // returns an array of arrays (i.e. a raw data set)
         return $resultSet->fetchAllAssociative();
     }
+
+    public function findPresenceByRole(string $role): array
+    {
+
+        $conn = $this->getEntityManager()->getConnection();
+
+        // combien 
+        $sql = '
+            SELECT 
+                u.roles->>0 as Role,
+                u.presence,
+                COUNT(u.id) AS total_presence
+            FROM "user" AS u
+            JOIN user_module_planning AS ump
+            ON ump.user_module_id = u.id
+            WHERE u.roles->>0 = :role
+            GROUP BY u.roles->>0, u.presence
+        ';
+
+        // prepare 
+        $resultSet = $conn->executeQuery($sql, ['role' => $role]);
+
+        // returns an array of arrays (i.e. a raw data set)
+        return $resultSet->fetchAllAssociative();
+    }
 }
