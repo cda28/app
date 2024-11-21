@@ -172,7 +172,7 @@ class User implements UserInterface, PasswordAuthenticatedUserInterface
     public function setRoles(array $roles): static
     {
         // definir les rôles attribués aux utilisateurs
-        if(empty(array_diff($roles, ['ROLE_STUDENT', 'ROLE_TEACHER', 'ROLE_ADMIN', 'ROLE_USER']))){
+        if (empty(array_diff($roles, ['ROLE_STUDENT', 'ROLE_TEACHER', 'ROLE_ADMIN', 'ROLE_USER']))) {
             $this->roles = $roles;
         }
 
