@@ -5,7 +5,7 @@ nelmio_cors:
         allow_methods: ['GET', 'OPTIONS', 'POST', 'PUT', 'PATCH', 'DELETE']
         allow_headers: ['Content-Type', 'Authorization']
         expose_headers: ['Link']
-        allow_credentials: true  # accéder du client les headers 
+        allow_credentials: true  # accéder du client les headers pour notre navigateur
         max_age: 3600
     paths:
         '^/': null
